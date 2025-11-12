@@ -12,7 +12,6 @@ const PrivateRoute = ({ element }) => {
 
 const PublicRoute = ({ element }) => {
   const { user } = useContext(AuthContext);
-  // agar user login hai, dashboard par redirect
   return user ? <Navigate to="/" /> : element;
 };
 

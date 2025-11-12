@@ -3,6 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 import API from "../api/api";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import Header from "../components/Header";
+import { AnimatePresence } from "framer-motion";
 
 const NotesDashboard = () => {
   const { user, logout } = useContext(AuthContext);
@@ -14,8 +15,6 @@ const NotesDashboard = () => {
   const [filteredNotes, setFilteredNotes] = useState([]);
 
 
-  
-  // Fetch notes
   const fetchNotes = async () => {
     const res = await API.get("/notes");
     setNotes(res.data);
@@ -26,7 +25,6 @@ const NotesDashboard = () => {
     fetchNotes();
   }, []);
 
-  // Search notes
   const handleSearch = () => {
     const filtered = notes.filter(
       (note) =>
@@ -36,7 +34,6 @@ const NotesDashboard = () => {
     setFilteredNotes(filtered);
   };
 
-  // Add or update note
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (editing) {
@@ -62,7 +59,6 @@ const NotesDashboard = () => {
   return (
     <div className={`${darkMode ? "bg-gray-900 text-gray-100" : "bg-gray-50 text-gray-900"} min-h-screen sm:p-10 sm:pt-5 transition-colors`}>
       
-      {/* Header */}
       <Header
         user={user}
         darkMode={darkMode}
@@ -70,10 +66,9 @@ const NotesDashboard = () => {
         search={search}
         setSearch={setSearch}
         handleSearch={handleSearch}
-        logout={logout} // pass logout to header
+        logout={logout}
       />
 
-      {/* Note Form */}
       <form
         onSubmit={handleSubmit}
         className={`text-center mb-6 p-4 rounded-lg shadow-md ${darkMode ? "bg-gray-800" : "bg-white"}`}
@@ -111,10 +106,20 @@ const NotesDashboard = () => {
         </button>
       </form>
 
-      {/* Notes Grid */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <AnimatePresence>
         {filteredNotes.length > 0 ? (
           filteredNotes.map((note) => (
+             <motion.div
+                key={note._id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.2 }}
+                className={`p-4 rounded-lg shadow-md transition-transform hover:scale-[1.02] ${
+                  darkMode ? "bg-gray-800" : "bg-white"
+                }`}
+              >
             <div
               key={note._id}
               className={`p-4 rounded-lg shadow-md transition-transform hover:scale-[1.02] ${darkMode ? "bg-gray-800" : "bg-white"}`}
@@ -136,12 +141,14 @@ const NotesDashboard = () => {
                 </button>
               </div>
             </div>
+             </motion.div>
           ))
         ) : (
           <p className="text-center col-span-full text-gray-500 dark:text-gray-400">
             No notes found
           </p>
         )}
+        </AnimatePresence>
       </div>
     </div>
   );

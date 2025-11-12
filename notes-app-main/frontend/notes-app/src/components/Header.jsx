@@ -8,17 +8,15 @@ const Header = ({ user, darkMode, setDarkMode, search, setSearch, handleSearch, 
     
     const handleLogout = () => {
       logout();
-      navigate("/login"); // redirect after logout
+      navigate("/login");
     };
   return (
     <header className="flex flex-col sm:flex-row justify-between items-center gap-3 mb-6 w-full">
       
-      {/* Left: Hello User */}
       <div className="flex-1 text-left text-lg font-semibold">
         Hello, {user.username}!
       </div>
 
-      {/* Center: Search Input + Button */}
       <div className="flex flex-1 justify-center items-center gap-2 w-full sm:w-auto">
         <input
           type="text"
@@ -40,7 +38,6 @@ const Header = ({ user, darkMode, setDarkMode, search, setSearch, handleSearch, 
         </button>
       </div>
 
-      {/* Right: Dark/Light + Logout */}
       <div className="flex flex-1 justify-end items-center gap-2">
         <button
           onClick={() => setDarkMode(!darkMode)}
@@ -49,7 +46,7 @@ const Header = ({ user, darkMode, setDarkMode, search, setSearch, handleSearch, 
           {darkMode ? <FiSun /> : <FiMoon />}
         </button>
         <button
-          onClick={() => handleLogout()} // pass logout function from parent
+          onClick={() => handleLogout()} 
           className="w-[10%] min-w-[60px] p-2 bg-red-500 hover:bg-red-600 text-white rounded-md transition text-sm"
         >
           Logout
