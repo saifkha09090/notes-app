@@ -15,6 +15,9 @@ app.use(express.json());
 app.use("/auth", authRoutes);
 app.use("/notes", noteRoutes);
 
+app.get("/", (req,res) => {
+  res.send("server running")
+})
 
 mongoose
   .connect(process.env.MONGO_URI)
