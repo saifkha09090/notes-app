@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://notes-app-self-ten.vercel.app/",
+  baseURL: "https://notes-app-one-bay.vercel.app",
 });
 
 // attach token before each request
