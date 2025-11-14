@@ -1,16 +1,15 @@
 import express from "express";
 import dotenv from "dotenv";
-import mongoose from "mongoose";
 import cors from "cors";
 
-import authRoutes from "./routes/authRoutes.js";
-import noteRoutes from "./routes/noteRoutes.js";
+import authRoutes from "./authRoutes.js";
+import noteRoutes from "./noteRoutes.js";
 
 dotenv.config();
 const app = express();
 
 const allowedOrigins = [
-  "https://echonotez.netlify.app",  
+  "https://echonotez.netlify.app",
   "http://localhost:5173"
 ];
 
@@ -36,14 +35,5 @@ app.use("/notes", noteRoutes);
 app.get("/", (req, res) => {
   res.send("Server running successfully");
 });
-
-// MongoDB
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB Connected"))
-  .catch((err) => console.log("MongoDB Error:", err));
-
-// ❌ DO NOT USE app.listen()
-// Vercel automatically handles this
 
 export default app;

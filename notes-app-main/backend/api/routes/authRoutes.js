@@ -2,7 +2,21 @@ import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
+import { connectDB } from "../db.js"
+
 const router = express.Router();
+
+
+router.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    console.error("DB Connection Error:", err.message);
+    res.status(500).json({ message: "Database connection failed" });
+  }
+});
+
 
 router.post("/signup", async (req, res) => {
   try {
@@ -23,9 +37,9 @@ router.post("/signup", async (req, res) => {
 });
 
 
-router.get("/login", (req,res) => {
-  res.send("login")
-})
+router.get("/login", (req, res) => {
+  res.send("login");
+});
 
 router.post("/login", async (req, res) => {
   try {

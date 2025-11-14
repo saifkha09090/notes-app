@@ -1,10 +1,22 @@
 import express from "express";
 import noteModel from "../models/Note.js";
 import { verifyToken } from "../middleware/authMiddleware.js";
+import { connectDB } from "../db.js";
+
 
 const router = express.Router();
 
 router.use(verifyToken);
+
+router.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    console.error("DB Connection Error:", err.message);
+    res.status(500).json({ message: "Database connection failed" });
+  }
+});
 
 router.get("/", async (req, res) => {
   try {
