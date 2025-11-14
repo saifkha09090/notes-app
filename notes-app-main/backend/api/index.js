@@ -2,15 +2,14 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
-
-import authRoutes from "../routes/authRoutes.js";
-import noteRoutes from "../routes/noteRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
+import noteRoutes from "./routes/noteRoutes.js";
 
 dotenv.config();
 const app = express();
 
 const allowedOrigins = [
-  process.env.CLIENT_URL,  
+  "https://echonotez.netlify.app",  
 ];
 
 app.use(
