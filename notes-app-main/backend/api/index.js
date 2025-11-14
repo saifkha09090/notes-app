@@ -28,8 +28,8 @@ app.use(
 
 app.use(express.json());
 
-app.use("/auth", authRoutes);
-app.use("/notes", noteRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/notes", noteRoutes);
 
 app.get("/", (req, res) => {
   res.send("Server running successfully ✅");
